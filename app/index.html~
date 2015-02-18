@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="slideshow"> <!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>appagoo</title>
+
+<script type="text/javascript">
+    (function() {
+        var path = '//easy.myfonts.net/v2/js?sid=201330(font-family=Code+Pro+Lowercase)&sid=201328(font-family=Code+Pro+Bold+Lowercase)&sid=201329(font-family=Code+Pro+Light+Lowercase)&sid=200732(font-family=Code+Pro+Light+Demo)&key=VoxufsMbTS',
+            protocol = ('https:' == document.location.protocol ? 'https:' : 'http:'),
+            trial = document.createElement('script');
+        trial.type = 'text/javascript';
+        trial.async = true;
+        trial.src = protocol + path;
+        var head = document.getElementsByTagName("head")[0];
+        head.appendChild(trial);
+    })();
+</script>
+
+<style type="text/css">#mfPreviewBar{display:none!important;}</style>
+
+  
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/css/mystyle.css" media="all">
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+  <![endif]-->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/android-chrome-manifest.json">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/jquery-ui.css">
+    <!-- endbuild -->
+
+</head>
+<!-- body class="intro" -->
+
+<body ng-app="appagooApp">
+
+  <div id="header" class="smooth-scroll"> <!-- smoothly scroll to internal links # -->
+    <div class="container">
+      <div class="row">
+        <div class="w5">
+          <img src="/styles/logo.png" class="img-responsive" alt="logo" />
+        </div>
+        <div class="w7" id="topmenu">
+          <a href="#"><i class="fa fa-info-circle"></i>About</a>
+          <a href="#"><i class="fa fa-envelope"></i>Contact</a>
+
+          {% if request.user.is_authenticated %}
+            <a href="/accounts/logout"><i class="fa fa-power-off"></i>Log out</a>
+          {% else %}
+            <a href="/accounts/login"><i class="fa fa-power-off"></i>Log in</a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if request.user.is_authenticated %}
+  <!-- ******************** Welcome back ******************************* -->
+  <div class="hero">
+    <div class="slide">
+      <div class="container">
+        <div class="row">
+            <div class="w4">
+              <img src="/images/avatar-hello.png" alt="" class="deco img-responsive" />
+            </div>
+            <div class="w5 pre2">
+              <div class="slidetext">
+                <h1>Welcome back <em>
+                    {% if request.user.first_name or request.user.last_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                    {% else %}
+                        {{ request.user.username }}
+                    {% endif %}
+                </em></h1>
+                <h2>Appagoo has got some recommendations for you.</h2>
+                <p>
+                  <a type="button" class="btn btn-lg smooth-scroll" href="/accounts/logout">
+                  Not you? Log out <i class="fa fa-power-off"></i>
+                  </a>
+                </p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ********************4 sections******************************* -->
+  <div class="section container">
+    <row>
+      <a class="col-sm-3 col-xs-6 marginB accent-c1 no-underline smooth-scroll" href="#section-profiler">
+        <div class="prettybox">
+          <h2 class="acc-text">Profiler</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-tasks acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c2 no-underline smooth-scroll" href="#section-store">
+        <div class="prettybox">
+          <h2 class="acc-text">Store</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-shopping-cart acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c3 no-underline smooth-scroll" href="#section-check">
+        <div class="prettybox">
+          <h2 class="acc-text">Check your apps</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-check acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c4 no-underline smooth-scroll" href="#section-facts">
+        <div class="prettybox">
+          <h2 class="acc-text">More facts</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-bar-chart acc-text fa-5x"></i>
+        </div>
+      </a>
+    </row>
+  </div>
+  {% else %}
+    <!--  carrousel -->
+  <div id="slideshow-container" class="hero hidden-xs">
+    <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#slideshow" data-slide-to="0" class="active"></li>
+        <li data-target="#slideshow" data-slide-to="1"></li>
+        <li data-target="#slideshow" data-slide-to="2"></li>
+      </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <!-- 1st page -->
+
+            <div class="item active">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="/images/avatar-profiler.png" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Everything gets better with the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 2nd page -->
+            <div class="item">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="/images/avatar-angry.png" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Slide 2 the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 3rd page -->
+            <div class="item">
+                <div class="slide">
+                  <div class="container">
+                    <div class="row">
+                        <div class="w4">
+                          <img src="/images/avatar-check.png" alt="" class="img-responsive" />
+                        </div>
+                        <div class="w5 pre2">
+                          <div class="slidetext">
+                            <h1>Third gets better with the <em>profiler</em></h1>
+                            <h2> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, repellat?</h2>
+                            <p>
+                              <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+                              Try it <i class="fa fa-arrow-right"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- end of pages -->
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#slideshow" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#slideshow" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+        <div class="arrowbottom"></div>
+
+    </div>
+  </div>
+
+  <!-- End of carrousel -->
+
+  <!-- ******************** Slideshow replacement ******************************* -->
+  <div  id="slideshow-replacement" class="hero visible-xs">
+    <div class="slide">
+      <div class="container">
+        <div class="slidetext">
+          <h1>Replacement for the slideshow <em>on small devices</em></h1>
+          <h2>A quick sentence says it all</h2>
+          <p>
+            <a type="button" class="btn btn-lg smooth-scroll" href="#section-easy">
+            Action boutton maybe <i class="fa fa-arrow-right"></i>
+            </a>
+          </p>
+        </div>
+        <img src="/images/avatar-hello.png" alt="" class="deco img-responsive" />
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- *************************************************** -->
+  <div id="section-easy" class="section container">
+    <div class="row">
+      <div class="c4">
+        <img src="/images/avatar-teach.png" class="img-responsive deco" >
+      </div>
+      <div class="c8 prettyframe">
+        <h1>Want to try it? It's <span class="text-c1">easy</span></h1>
+        <div class="row accent-c2">
+          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">1</span></div>
+          <div class="col-sm-11 col-xs-10">
+            <h2 class="acc-text">Define your profile</h2>
+            <p>Tell Appagoo what you'd like to share and what must remain private</p>
+          </div>
+        </div>
+        <div class="row accent-c1">
+          <div class="col-sm-1 col-xs-2"><span class="disc disc-2x acc-bg">2</span></div>
+          <div class="col-sm-11 col-xs-10">
+            <h2 class="acc-text">Find new apps or check yours</h2>
+            <p>Check apps that match your profile, or check your installed apps</p>
+          </div>
+        </div>
+      </div>
+      <div class="line">
+        <p class="center">
+          <i class="fa fa-chevron-down fa-3x"></i>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- ********************The profiler******************************* -->
+
+  <div id="section-profiler" class="section bright">
+    <div class="container" ng-controller="ProfileCtrl">
+      <div class="row accent-c2">
+        <div class="pre3 c1 center">
+          <span class="disc disc-3x acc-bg">1</span>
+        </div>
+        <div class="c6">
+          <h1>Use the <span class="acc-text">profiler</span> to define what should be private</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="c6 pre3"><p>Which information are you ready to share?</p></div>
+      </div>
+      <div class="row">
+        <div class="c7 pre1"> <!-- The sliders zone -->
+          <div class="row">
+            <div class="col-sm-2 col-xs-4 pre6 accent-no">
+              <span class="disc acc-bg"><i class="fa fa-exclamation"></i></span>
+              <span class="acc-text"> No!</span>
+            </div>
+            <div class="col-sm-2 col-xs-4 center accent-maybe"><span class="disc acc-bg"><i class="appa-tilda"></i></span></div>
+            <div class="col-sm-2 col-xs-4 right accent-yes marginB"><span class="acc-text">Yes</span>
+              <span class="disc acc-bg"><i class="fa fa-check"></i></span>
+            </div>
+          </div>
+          
+          <div class="row" ng-repeat="threat in threats">
+            <div class="c4 pre2 label-slider" ng-bind="threat.label"></div>
+            <div class="c6">
+                <div slider min="0" max="10" ng-model="threat.default_value"></div>  
+            </div>
+          </div>
+        </div>
+        <div class="c3 pre1">
+          <img src="/images/avatar-profiler.png" class="img-responsive deco" >
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ************************ STORE *************************** -->
+
+  <div id="section-store" class="section" ng-app="storeApp">
+    <div class="container" ng-controller="StoreCtrl">
+      <div class="row accent-c1">
+        <div class="c3">
+          <img src="/images/avatar-shop.png" class="img-responsive deco" >
+        </div>
+        <div class="c1 center">
+          <span class="disc disc-3x acc-bg">2</span>
+        </div>
+        <div class="c7">
+          <h1>Check what’s in the <span class="acc-text">store</span></h1>
+          <p>Install apps knowing how they match your profile</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="c3 palebox">
+          <input type="search" class="form-control marginB" placeholder="Search..." ng-model="search.name">
+          <button type="button" class="btn btn-lg  bg-c1 fill">Search <i class="fa fa-search"></i></button>
+
+
+          <h3 class="marginT">Price</h3>
+          <div class="checkbox">
+            <label ng-click="changeFreePriceFilter()">
+              <input type="checkbox" value="free" ng-model="priceFilter.free" icheck>
+              Free
+            </label>
+          </div>
+          <div class="checkbox">
+            <label ng-click="changeCommercialPriceFilter()">
+              <input type="checkbox" value="commercial" ng-model="priceFilter.commercial" icheck>
+              Commercial
+            </label>
+          </div>
+          <h3 class="overline">Minimum rating</h3>
+          
+          <input type="number" name="minimal_rating" data-max="5" data-min="1" id="some_id" class="rating" data-clearable="remove" data-icon-lib="fa" data-active-icon="fa-star obvious" data-inactive-icon="fa-star faded" data-clearable-icon="fa-trash-o" data-clearable="remove" ng-model="minRate"/>
+
+
+          <h3 class="overline">Categories</h3>
+          <h4>Selected categories:</h4>
+          <div class="dropdown" id="categories">
+            <div id="categories-selected-tags" ng-repeat="item in filter.chosen">
+              <button type="button" class="btn btn-xs chosen" ng-click="removeCategoryFilter(item)">
+                  [[item]]
+              </button>
+            </div>
+            <h4 class="marginT">Available categories:</h4>
+            <div id="categories-unselected-tags" ng-repeat="item in filter.unchosen">
+              <button type="button" class="btn btn-xs unchosen" ng-click="addCategoryFilter(item)">
+                  [[item]]
+              </button>
+            </div>
+
+
+          </div>
+
+        </div>
+        <div class="c9">
+          <div class="row">
+            <div class="c4b">
+              <h3>Sort apps by</h3>
+            </div>
+            <div class="c4b">
+              <select class="form-control" ng-model="order">
+                <option value="-downloads" ng-selected="true">Most popular</option>
+                <option value="downloads">Less popular</option>
+                <option value="price">Most expensive</option>
+                <option value="-price">Less expensive</option>
+                <option value="-number_evaluations">Most evaluations</option>
+                <option value="number_evaluations">Less evaluations</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+
+            <!-- one app -->
+            <div class="c4b" dir_paginate="application in applications | filter: filterByCategory | filter: filterByPrice | filter: search | filter: filterByMinimalRate | orderBy: order | itemsPerPage: 12 track by application.id">
+
+              <div class="app-info">
+                <div class="pop-corner bg-yes">
+                  <i class="fa fa-check"></i>
+                </div>
+                <div class="row">
+                  <div class="wx4">
+                    <a target=_blank href=[[application.market_url]]><img ng-src="[[application.icon]]" class="img-responsive"></a>
+                  </div>
+                  <div class="wx8">
+                    <a target=_blank href=[[application.market_url]]><p ng-bind="application.name"></p></a>
+                    <div class="small">
+                      <p>
+                        <i class="fa fa-star" ng-repeat="_ in ((_ = []) && (_.length=(application.evaluation | number : 0)) && _) track by $index"></i><i class="fa fa-star-o" ng-repeat="_ in ((_ = []) && (_.length=(5-(application.evaluation | number : 0))) && _) track by $index"></i>
+                      </p>
+                      <p>[[application.number_evaluations]] ratings</p>
+                      <p class="text-yes" ng-bind="application.price === 0 ? 'FREE' : application.price + ' ' + application.currency"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div > <!-- one row of apps -->
+
+
+          <!-- last line nav -->
+          <div class="row">
+            <!--
+            <div class="cx6">
+              <button type="button" class="btn btn-disabled" disabled="">
+                <i class="fa fa-arrow-left"></i> Previous 
+              </button>        
+            </div>
+            -->
+            <div class="text-center">
+              <dir-pagination-controls></dir-pagination-controls>
+            </div>
+            <!--
+            <div class="cx6 right">
+              <button type="button" class="btn">
+                Next <i class="fa fa-arrow-right"></i>
+              </button>        
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ************************ Check *************************** -->
+  <div id="section-check" class="section container">
+    <div class="row">
+      <div class="c3">
+        <img src="/images/avatar-check.png" class="img-responsive deco" >
+      </div>
+      <div class="c6 accent-c3 pre1">
+        <h1><span class="acc-text">Check your installed apps</span> and see how they match your profile</h1>
+        <p>Let's see how your installed apps match the criteria in your profile</p>
+      </div>
+    </div> 
+  </div>
+
+
+  <!-- ************************ Facts and stats *************************** -->
+  <div id="section-facts">  
+    <div class="section container">
+      <div class="row">
+        <div class="c3">
+          <img src="/images/avatar-facts.png" class="img-responsive deco" >
+        </div>
+        <div class="c6 accent-c4 pre1">
+          <h1>Get more <span class="acc-text">interesting facts</span></h1>
+          <p>Appagoo has gathered more fun information for you</p>
+        </div>
+      </div> 
+
+      <div class="row">
+        <div class="c3">
+          <h2>Trusted applications</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita voluptatum quae, dolorem facilis dicta in ut accusamus consequatur natus veniam eum recusandae, rem libero magni. Amet voluptatem maiores blanditiis officia.</p>
+        </div>
+        <div class="c3">
+          <h2>Best apps</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, alias.</p>
+          <p>Consectetur adipisicing elit. Inventore, alias.</p>
+        </div>
+        <div class="c3">
+          <h2>More information</h2>
+          <p>Awesome list Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum voluptatem sint inventore velit. Iusto quia minus, et doloremque eaque voluptatibus dolores assumenda debitis a impedit. Sunt aperiam esse in quod!</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, alias.</p>
+          <p>Consectetur adipisicing elit. Inventore, alias.</p>
+        </div>
+
+      </div> 
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div id="footer">
+      <a href="#">Conditions d’utilisation</a> | <a href="#">Privacy</a> | <a href="#">Impressum</a>
+  </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/bootstrap-rating-input/build/bootstrap-rating-input.min.js"></script>
+    <script src="bower_components/iCheck/icheck.min.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-slider/src/slider.js"></script>
+    <script src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script src="bower_components/angular-bootstrap-slider/slider.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/store.js"></script>
+        <script src="scripts/directives/dirpagination.js"></script>
+        <script src="scripts/directives/icheck.js"></script>
+        <script src="scripts/filters/makefilteritems.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
