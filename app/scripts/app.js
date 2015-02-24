@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'app.filters',
     'angularUtils.directives.dirPagination',
-    'ui.bootstrap-slider'
+    'ui.bootstrap-slider',
+    'ngDialog'
   ])
   .config(function ($routeProvider, $interpolateProvider, $httpProvider, $resourceProvider) {
     $routeProvider

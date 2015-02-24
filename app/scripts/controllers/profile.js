@@ -19,11 +19,13 @@ angular.module('appagooApp')
        $scope.threats = results.data;
 
     });
+
 	
-	$scope.$watch('threats', function(val){
-		console.log($scope.threats);
-		console.log(val);
-	}, true);
+    $scope.$watch('threats', function(val){
+	console.log($scope.threats);
+	console.log(val);
+        
+    }, true);
 
 
   });

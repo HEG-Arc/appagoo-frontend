@@ -15,10 +15,15 @@ angular.module('appagooApp')
       'Karma'
     ];
 
-    $scope.profiler = 3;
-
     $http.get('http://127.0.0.1:8000/api/threats/?format=json').then(function(results) {
        $scope.threats = results.data;
 
     });
+	
+	$scope.$watch('threats', function(val){
+		console.log($scope.threats);
+		console.log(val);
+	}, true);
+
+
   });

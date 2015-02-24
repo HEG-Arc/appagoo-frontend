@@ -33,7 +33,9 @@ module.exports = function(config) {
       'bower_components/iCheck/icheck.min.js',
       'bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js',
       'bower_components/angular-bootstrap-slider/slider.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/ngDialog/js/ngDialog.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

@@ -56,11 +56,12 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css" />
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/jquery-ui.css">
     <!-- endbuild -->
 
 </head>
@@ -68,7 +69,7 @@
 
 <body ng-app="appagooApp">
 
-  <div id="header" class="smooth-scroll"> <!-- smoothly scroll to internal links # -->
+  <div id="header" class="smooth-scroll" ng-controller="LoginCtrl"> <!-- smoothly scroll to internal links # -->
     <div class="container">
       <div class="row">
         <div class="w5">
@@ -77,19 +78,15 @@
         <div class="w7" id="topmenu">
           <a href="#"><i class="fa fa-info-circle"></i>About</a>
           <a href="#"><i class="fa fa-envelope"></i>Contact</a>
-
-          {% if request.user.is_authenticated %}
+          <!--
             <a href="/accounts/logout"><i class="fa fa-power-off"></i>Log out</a>
-          {% else %}
-            <a href="/accounts/login"><i class="fa fa-power-off"></i>Log in</a>
-          {% endif %}
-
+          -->
+          <a href="#" ng-click="clickToLogin()"><i class="fa fa-power-off"></i>Log in</a>
         </div>
       </div>
     </div>
   </div>
-
-  {% if request.user.is_authenticated %}
+  
   <!-- ******************** Welcome back ******************************* -->
   <div class="hero">
     <div class="slide">
@@ -101,11 +98,7 @@
             <div class="w5 pre2">
               <div class="slidetext">
                 <h1>Welcome back <em>
-                    {% if request.user.first_name or request.user.last_name %}
-                        {{ request.user.first_name }} {{ request.user.last_name }}
-                    {% else %}
-                        {{ request.user.username }}
-                    {% endif %}
+		  Toto
                 </em></h1>
                 <h2>Appagoo has got some recommendations for you.</h2>
                 <p>
@@ -160,7 +153,7 @@
       </a>
     </row>
   </div>
-  {% else %}
+  
     <!--  carrousel -->
   <div id="slideshow-container" class="hero hidden-xs">
     <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
@@ -313,7 +306,7 @@
       </div>
     </div>
   </div>
-  {% endif %}
+
   <!-- ********************The profiler******************************* -->
 
   <div id="section-profiler" class="section bright">
@@ -575,6 +568,9 @@
     <script src="bower_components/iCheck/icheck.min.js"></script>
     <script src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
     <script src="bower_components/angular-bootstrap-slider/slider.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="bower_components/ngDialog/js/ngDialog.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -588,6 +584,9 @@
         <script src="scripts/directives/icheck.js"></script>
         <script src="scripts/filters/makefilteritems.js"></script>
         <script src="scripts/directives/saveprofiler.js"></script>
+        <script src="scripts/directives/passwordmatch.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/services/authentication.js"></script>
         <!-- endbuild -->
 </body>
 </html>
