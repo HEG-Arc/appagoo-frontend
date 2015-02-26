@@ -1,0 +1,17 @@
+<h3>Please choose your log in mode</h3>
+<a href="#" ng-click="loginWithGoogle()">
+  <img src="/images/sign-in-with-google.png" alt="Sign in with Google" width="100%" >
+</a>
+<p>or</p>
+<!-- Login Form -->
+<form id="loginForm" name="loginForm" ng-submit="login(loginObj)">
+  <div class="form-group">
+    <input type="text" class="form-control" ng-model="loginObj.email" name="email" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" ng-model="loginObj.password" name="password" placeholder="Password">
+  </div>
+  <button class="btn btn-lg btn-block" ng-type="submit">Login <i class="fa" ng-class="login.working ? 'fa-cog fa-spin' : 'fa-sign-in'"></i></button>
+</form>
+<a href="#" ng-click="clickToRegister()">Create an account</a>
+
