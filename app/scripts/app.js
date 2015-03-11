@@ -19,9 +19,9 @@ angular
     'app.filters',
     'angularUtils.directives.dirPagination',
     'ui.bootstrap-slider',
-    'ngDialog'
+    'ngDialog',
   ])
-  .config(function ($routeProvider, $interpolateProvider, $httpProvider, $resourceProvider) {
+  .config(function ($routeProvider, $interpolateProvider, $httpProvider, $resourceProvider, ngDialogProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -42,8 +42,12 @@ angular
     // CSRF Support
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    //$httpProvider.defaults.withCredentials = true;
 
     // This only works in angular 3!
     // It makes dealing with Django slashes at the end of everything easier.
     $resourceProvider.defaults.stripTrailingSlashes = false;
+    
+    ngDialogProvider.setForceBodyReload(true);
+    
   });

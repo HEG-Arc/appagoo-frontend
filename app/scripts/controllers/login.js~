@@ -1,0 +1,44 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name appagooApp.controller:LoginCtrl
+ * @description
+ * # LoginCtrl
+ * Controller of the appagooApp
+ */
+angular.module('appagooApp')
+  .controller('LoginCtrl', function ($scope, $http, ngDialog, $cookies, Authentication) {
+    $scope.clickToLogin = function () {
+        ngDialog.open({ 
+          template: '/scripts/templates/login.tpl.html',
+          controller: 'LoginCtrl'
+        });
+    };
+    
+    $scope.clickToLogout = function () {
+        Authentication.logout();
+    };
+    
+    $scope.clickToRegister = function () {
+        this.closeThisDialog();
+        ngDialog.open({ 
+          template: '/scripts/templates/register.tpl.html',
+          controller: 'LoginCtrl'
+        });
+    };
+    
+    $scope.registerObj = {
+    };
+    
+    $scope.register = function(registerObj) {
+      Authentication.register(registerObj);
+    };
+    
+    $scope.login = function(loginObj) {
+      Authentication.login(loginObj);
+    }  
+    
+    $scope.user = Authentication;
+        
+  });

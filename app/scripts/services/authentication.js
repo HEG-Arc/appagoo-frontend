@@ -23,7 +23,7 @@ angular.module('appagooApp')
       return Authentication;
     
       function register(registerObj) {
-        //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         return $http.post('http://localhost:8000/api/users/', {
           username: registerObj.email,
           password: registerObj.password,
@@ -32,7 +32,7 @@ angular.module('appagooApp')
       }
       
       function registerSuccessFn(data, status, headers, config) {
-        Authentication.login(email, password);
+        Authentication.login(data.data);
       }
 
       function registerErrorFn(data, status, headers, config) {

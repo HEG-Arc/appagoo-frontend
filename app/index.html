@@ -68,8 +68,8 @@
 <!-- body class="intro" -->
 
 <body ng-app="appagooApp">
-
-  <div id="header" class="smooth-scroll" ng-controller="LoginCtrl"> <!-- smoothly scroll to internal links # -->
+<div ng-controller="LoginCtrl">
+  <div id="header" class="smooth-scroll" > <!-- smoothly scroll to internal links # -->
     <div class="container">
       <div class="row">
         <div class="w5">
@@ -81,14 +81,19 @@
           <!--
             <a href="/accounts/logout"><i class="fa fa-power-off"></i>Log out</a>
           -->
-          <a href="#" ng-click="clickToLogin()"><i class="fa fa-power-off"></i>Log in</a>
+          <a href="#" ng-click="clickToLogin()" ng-hide="user.isAuthenticated() || signedIn" ><i class="fa fa-power-off"></i>Log in</a>
+          <a href="#" ng-click="clickToLogout()" ng-hide="!user.isAuthenticated() && !signedIn"><i class="fa fa-power-off"></i>[[user.getAuthenticatedAccount().username || google_data.email]]</a>
+          <span id="googleSignIn" ng-hide="user.isAuthenticated() || signedIn">
+              <span id="signInButton">
+              </span>
+          </span>
         </div>
       </div>
     </div>
   </div>
   
   <!-- ******************** Welcome back ******************************* -->
-  <div class="hero">
+  <div class="hero" ng-hide="!user.isAuthenticated() && !signedIn">
     <div class="slide">
       <div class="container">
         <div class="row">
@@ -97,12 +102,11 @@
             </div>
             <div class="w5 pre2">
               <div class="slidetext">
-                <h1>Welcome back <em>
-		  Toto
+                <h1>Welcome back <em>[[user.getAuthenticatedAccount().first_name + ' ' + user.getAuthenticatedAccount().last_name || google_data.name]]
                 </em></h1>
                 <h2>Appagoo has got some recommendations for you.</h2>
                 <p>
-                  <a type="button" class="btn btn-lg smooth-scroll" href="/accounts/logout">
+                  <a type="button" class="btn btn-lg smooth-scroll" href="#" ng-click="clickToLogout()">
                   Not you? Log out <i class="fa fa-power-off"></i>
                   </a>
                 </p>
@@ -112,50 +116,9 @@
       </div>
     </div>
   </div>
-  <!-- ********************4 sections******************************* -->
-  <div class="section container">
-    <row>
-      <a class="col-sm-3 col-xs-6 marginB accent-c1 no-underline smooth-scroll" href="#section-profiler">
-        <div class="prettybox">
-          <h2 class="acc-text">Profiler</h2>
-          <p>Lorem ipsum</p>
-        </div>
-        <div class="deco-icon">
-          <i class="fa fa-tasks acc-text fa-5x"></i>
-        </div>
-      </a>
-      <a class="col-sm-3 col-xs-6 marginB accent-c2 no-underline smooth-scroll" href="#section-store">
-        <div class="prettybox">
-          <h2 class="acc-text">Store</h2>
-          <p>Lorem ipsum</p>
-        </div>
-        <div class="deco-icon">
-          <i class="fa fa-shopping-cart acc-text fa-5x"></i>
-        </div>
-      </a>
-      <a class="col-sm-3 col-xs-6 marginB accent-c3 no-underline smooth-scroll" href="#section-check">
-        <div class="prettybox">
-          <h2 class="acc-text">Check your apps</h2>
-          <p>Lorem ipsum</p>
-        </div>
-        <div class="deco-icon">
-          <i class="fa fa-check acc-text fa-5x"></i>
-        </div>
-      </a>
-      <a class="col-sm-3 col-xs-6 marginB accent-c4 no-underline smooth-scroll" href="#section-facts">
-        <div class="prettybox">
-          <h2 class="acc-text">More facts</h2>
-          <p>Lorem ipsum</p>
-        </div>
-        <div class="deco-icon">
-          <i class="fa fa-bar-chart acc-text fa-5x"></i>
-        </div>
-      </a>
-    </row>
-  </div>
   
     <!--  carrousel -->
-  <div id="slideshow-container" class="hero hidden-xs">
+  <div id="slideshow-container" class="hero hidden-xs" ng-hide="user.isAuthenticated() || signedIn">
     <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
       <!-- Indicators -->
       <ol class="carousel-indicators">
@@ -272,12 +235,9 @@
       </div>
     </div>
   </div>
-
-
-
-
+  
   <!-- *************************************************** -->
-  <div id="section-easy" class="section container">
+  <div id="section-easy" class="section container" ng-hide="user.isAuthenticated() || signedIn">
     <div class="row">
       <div class="c4">
         <img src="/images/avatar-teach.png" class="img-responsive deco" >
@@ -307,6 +267,50 @@
     </div>
   </div>
 
+
+<!-- ********************4 sections******************************* -->
+  <div class="section container">
+    <row>
+      <a class="col-sm-3 col-xs-6 marginB accent-c1 no-underline smooth-scroll" href="#section-profiler">
+        <div class="prettybox">
+          <h2 class="acc-text">Profiler</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-tasks acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c2 no-underline smooth-scroll" href="#section-store">
+        <div class="prettybox">
+          <h2 class="acc-text">Store</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-shopping-cart acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c3 no-underline smooth-scroll" href="#section-check">
+        <div class="prettybox">
+          <h2 class="acc-text">Check your apps</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-check acc-text fa-5x"></i>
+        </div>
+      </a>
+      <a class="col-sm-3 col-xs-6 marginB accent-c4 no-underline smooth-scroll" href="#section-facts">
+        <div class="prettybox">
+          <h2 class="acc-text">More facts</h2>
+          <p>Lorem ipsum</p>
+        </div>
+        <div class="deco-icon">
+          <i class="fa fa-bar-chart acc-text fa-5x"></i>
+        </div>
+      </a>
+    </row>
+  </div>
+
+</div>
   <!-- ********************The profiler******************************* -->
 
   <div id="section-profiler" class="section bright">
@@ -335,10 +339,10 @@
             </div>
           </div>
           
-          <div class="row" ng-repeat="threat in threats">
-            <div class="c4 pre2 label-slider" ng-bind="threat.label"></div>
+          <div class="row" ng-repeat="profil in profiles">
+            <div class="c4 pre2 label-slider" ng-bind="profil.threat"></div>
             <div class="c6">
-                <slider min="0" max="10" ng-model="threat.default_value"></slider>  
+                <slider min="0" max="10" ng-model="profil.value" on-stop-slide="profilUpdate(profil)"></slider>  
             </div>
           </div>
         </div>
@@ -551,6 +555,16 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+    
+    <script>
+      (function() {
+          var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+          po.src = 'https://apis.google.com/js/client:plusone.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+    </script>
+  
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
