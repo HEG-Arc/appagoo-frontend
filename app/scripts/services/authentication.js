@@ -8,7 +8,7 @@
  * Factory in the appagooApp.
  */
 angular.module('appagooApp')
-  .factory('Authentication', function ($cookies, $http) {
+  .factory('Authentication', function ($cookies, $http, $rootScope) {
       
       var Authentication = {
         getAuthenticatedAccount: getAuthenticatedAccount,
@@ -19,15 +19,17 @@ angular.module('appagooApp')
         setAuthenticatedAccount: setAuthenticatedAccount,
         unauthenticate: unauthenticate,
       };
-
+      
       return Authentication;
     
       function register(registerObj) {
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-        return $http.post('http://localhost:8000/api/users/', {
+        //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        return $http.post('/api/users/', {
           username: registerObj.email,
           password: registerObj.password,
-          email: registerObj.email
+          email: registerObj.email,
+          first_name: registerObj.first_name,
+          last_name:registerObj.last_name
         }).then(registerSuccessFn, registerErrorFn);
       }
       
@@ -40,11 +42,21 @@ angular.module('appagooApp')
       }
       
       function login(loginObj) {
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-        return $http.post('http://localhost:8000/api/login/', {
+        //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        return $http.post('/api/login/', {
           email: loginObj.email, 
           password: loginObj.password
         }).then(loginSuccessFn, loginErrorFn);
+      }
+      
+      function loginSuccessFn(data, status, headers, config) {
+        Authentication.setAuthenticatedAccount(data.data);
+        $rootScope.$broadcast('user:login',data);
+        //window.location = '/';
+      }
+      
+      function loginErrorFn(data, status, headers, config) {
+        console.error('Epic failure!');
       }
 
       function getAuthenticatedAccount() {
@@ -54,7 +66,7 @@ angular.module('appagooApp')
 
         return JSON.parse($cookies.authenticatedAccount);
       }
-          
+      
       function isAuthenticated() {
         return !!$cookies.authenticatedAccount;
       }
@@ -67,29 +79,20 @@ angular.module('appagooApp')
         delete $cookies.authenticatedAccount;
       }
       
-      function loginSuccessFn(data, status, headers, config) {
-        Authentication.setAuthenticatedAccount(data.data);
-
-        window.location = '/';
+      function logout() {
+        //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        return $http.post('/api/logout/')
+          .then(logoutSuccessFn, logoutErrorFn);
       }
-      
-      function loginErrorFn(data, status, headers, config) {
+
+      function logoutSuccessFn(data, status, headers, config) {
+        Authentication.unauthenticate();
+        $rootScope.$broadcast('user:logout',data);
+        //window.location = '/';
+      }
+
+      function logoutErrorFn(data, status, headers, config) {
         console.error('Epic failure!');
       }
       
-      function logout() {
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-        return $http.post('http://localhost:8000/api/logout/')
-          .then(logoutSuccessFn, logoutErrorFn);
-
-        function logoutSuccessFn(data, status, headers, config) {
-          Authentication.unauthenticate();
-
-          window.location = '/';
-        }
-
-        function logoutErrorFn(data, status, headers, config) {
-          console.error('Epic failure!');
-        }
-      }
 });

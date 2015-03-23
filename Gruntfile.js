@@ -68,14 +68,20 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '0.0.0.0', //'localhost',
         livereload: 35729
       },
+      proxies: [{
+        context: '/api', // the context of the data service
+        host: 'localhost', // wherever the data service is running
+        port: 8000 // the port that the data service is running on
+      }],
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
+           middleware: function (connect) {
+            var middlewares = [];
+            middlewares = [
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -85,10 +91,15 @@ module.exports = function (grunt) {
                 '/app/styles',
                 connect.static('./app/styles')
               ),
-              connect.static(appConfig.app)
+             connect.static(appConfig.app)
             ];
+            // Setup the proxy
+            middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+            
+            return middlewares;
+            
+            }
           }
-        }
       },
       test: {
         options: {
@@ -400,6 +411,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
@@ -441,4 +453,8 @@ module.exports = function (grunt) {
     /*'test',*/
     'build'
   ]);
+  
+  grunt.loadNpmTasks('grunt-connect-proxy');
+  
+  
 };

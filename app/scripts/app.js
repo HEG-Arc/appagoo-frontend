@@ -20,6 +20,7 @@ angular
     'angularUtils.directives.dirPagination',
     'ui.bootstrap-slider',
     'ngDialog',
+    'directive.g+signin'
   ])
   .config(function ($routeProvider, $interpolateProvider, $httpProvider, $resourceProvider, ngDialogProvider) {
     $routeProvider
@@ -42,7 +43,7 @@ angular
     // CSRF Support
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    //$httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = true;
 
     // This only works in angular 3!
     // It makes dealing with Django slashes at the end of everything easier.

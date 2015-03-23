@@ -8,36 +8,34 @@
  * Controller of the appagooApp
  */
 angular.module('appagooApp')
-  .controller('LoginCtrl', function ($scope, $http, ngDialog, $cookies, Authentication) {
+  .controller('LoginCtrl', function ($scope, $rootScope, $http, ngDialog, $cookies, Authentication) {
     $scope.loginWithGoogle = function () {
-        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-        return $http.post('http://localhost:8000/api-token/login/', {
+        //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+        return $http.post('/api-token/login/', {
           email: loginObj.email, 
           password: loginObj.password
-        }).then(loginSuccessFn, loginErrorFn);
+        });
     };
     
     $scope.clickToLogin = function () {
         ngDialog.open({ 
-          template: '/scripts/templates/login.tpl.html',
+          template: '/views/login.tpl.html',
           controller: 'LoginCtrl'
         });
+        //$scope.renderSignInButton();
     };
-    
+       
     $scope.clickToLogout = function () {
         if ($scope.user.isAuthenticated()) {
           Authentication.logout();
-        } 
-        if ($scope.signedIn) {
-          gapi.auth.signOut();
-          $scope.signedIn = false;
+          //gapi.auth.signOut();
         }
     };
     
     $scope.clickToRegister = function () {
         this.closeThisDialog();
         ngDialog.open({ 
-          template: '/scripts/templates/register.tpl.html',
+          template: '/views/register.tpl.html',
           controller: 'LoginCtrl'
         });
     };
@@ -54,10 +52,30 @@ angular.module('appagooApp')
     
     $scope.login = function(loginObj) {
       Authentication.login(loginObj);
-    }  
+      ngDialog.close();
+    } 
+        
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {  
+      $http.get("https://www.googleapis.com/oauth2/v1/userinfo?access_token="+authResult['access_token']).
+        then(function(res){
+          Authentication.setAuthenticatedAccount(res.data); 
+          $rootScope.$broadcast('user:login',res.data);
+        });
+      $http.post('/api/login-token/', {
+        access_token: authResult.access_token
+      });
+      ngDialog.close();
+      $scope.user = Authentication;
+    });
+    
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+      // User has not authorized the G+ App!
+      console.log('Not signed into Google Plus.');
+    });
     
     $scope.user = Authentication;
-    
+      
+    /*
     // This flag we use to show or hide the button in our HTML.
     $scope.signedIn = false;
  
@@ -68,18 +86,21 @@ angular.module('appagooApp')
         if(authResult['access_token']) {
             // Successful sign in.
             $scope.signedIn = true;
-            
+                        
             $http.get("https://www.googleapis.com/oauth2/v1/userinfo?access_token="+authResult['access_token']).
               then(function(res){
                 $scope.google_data = res.data;
+                console.log(res.data);
+                Authentication.setAuthenticatedAccount(res.data); 
+                console.log(Authentication.getAuthenticatedAccount().name);
               });
             
             // Workaround -> Error: Blocked a frame with origin "http://localhost:9000" from accessing a cross-origin frame.
             authResult['g-oauth-window'] = "";
             
-            $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-            $http.post('http://localhost:8000/api/login-token/', authResult);     
-     
+            //$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+            $http.post('/api/login-token/', authResult);  
+                      
         } else if(authResult['error']) {
             // Error while signing in.
             $scope.signedIn = false;
@@ -89,10 +110,12 @@ angular.module('appagooApp')
     };
  
     // When callback is received, we need to process authentication.
-    $scope.signInCallback = function(authResult) {
-        $scope.$apply(function() {
-            $scope.processAuth(authResult);
-        });
+     $scope.signInCallback = function (authResult) {
+        setTimeout(function () {
+            $scope.$apply(function () {
+                $scope.processAuth(authResult);
+            });
+        }, 0);
     };
  
     // Render the sign in button.
@@ -108,11 +131,6 @@ angular.module('appagooApp')
             }
         );
     }
- 
-    // Start function in this example only renders the sign in button.
-    $scope.start = function() {
-        $scope.renderSignInButton();
-    };
-        
-    $scope.start();
+    */
+         
   });

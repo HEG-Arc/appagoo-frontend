@@ -8,7 +8,7 @@
  * Controller of the appagooApp
  */
 angular.module('appagooApp')
-  .controller('StoreCtrl', function ($scope, $http, $filter) {
+  .controller('StoreCtrl', function ($scope, $http, $filter, $cookies) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -22,8 +22,8 @@ angular.module('appagooApp')
         commercial:false
     };
 
-
-    $http.get('http://127.0.0.1:8000/api/applications/?format=json').then(function(results) {
+    //$http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
+    $http.get('/api/applications/?format=json').then(function(results) {
         $scope.applications = results.data;
 
         $scope.filter = makeFilterItems($scope.applications, "category", true);
