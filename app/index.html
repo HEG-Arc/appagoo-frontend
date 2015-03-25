@@ -79,24 +79,15 @@
             <div class="w7" id="topmenu">
               <a href="#"><i class="fa fa-info-circle"></i>About</a>
               <a href="#"><i class="fa fa-envelope"></i>Contact</a>
-              <!--
-                <a href="/accounts/logout"><i class="fa fa-power-off"></i>Log out</a>
-              -->
-              <a href="#" ng-click="clickToLogin()" ng-if="!user.isAuthenticated()"><i class="fa fa-power-off"></i>Log in</a>
-              <a href="#" ng-click="clickToLogout()" ng-if="user.isAuthenticated()"><i class="fa fa-power-off"></i>[[user.getAuthenticatedAccount().username || user.getAuthenticatedAccount().email]]</a>        
-              <!--
-              <span id="googleSignIn" ng-if="user.isAuthenticated()">
-                  <span id="signInButton">
-                  </span>
-              </span>
-              -->
+              <a href="#" ng-click="clickToLogin()" ng-if="!authenticated"><i class="fa fa-power-off"></i>Log in</a>
+              <a href="/accounts/logout" ng-if="authenticated"><i class="fa fa-power-off"></i>[[user.username]]</a>        
             </div>
           </div>
         </div>
       </div>
       
       <!-- ******************** Welcome back ******************************* -->
-      <div class="hero" ng-if="user.isAuthenticated()" ng-cloak>
+      <div class="hero" ng-if="authenticated" ng-cloak>
         <div class="slide">
           <div class="container">
             <div class="row">
@@ -105,11 +96,11 @@
                 </div>
                 <div class="w5 pre2">
                   <div class="slidetext">
-                    <h1>Welcome back <em>[[user.getAuthenticatedAccount().first_name + ' ' + user.getAuthenticatedAccount().last_name + user.getAuthenticatedAccount().name]]
+                    <h1>Welcome back <em>[[user.first_name + ' ' + user.last_name]]
                     </em></h1>
                     <h2>Appagoo has got some recommendations for you.</h2>
                     <p>
-                      <a type="button" class="btn btn-lg smooth-scroll" href="#" ng-click="clickToLogout()">
+                      <a type="button" class="btn btn-lg smooth-scroll" href="/accounts/logout">
                       Not you? Log out <i class="fa fa-power-off"></i>
                       </a>
                     </p>
@@ -121,7 +112,7 @@
       </div>
       
         <!--  carrousel -->
-      <div id="slideshow-container" class="hero hidden-xs" ng-if="!user.isAuthenticated()">
+      <div id="slideshow-container" class="hero hidden-xs" ng-if="!authenticated">
         <div id="slideshow" class="carousel slide"  data-ride="carousel"  data-interval="5000"> <!--hidden-xs  carousel-fade-->
           <!-- Indicators -->
           <ol class="carousel-indicators">
@@ -240,7 +231,7 @@
       </div>
       
       <!-- *************************************************** -->
-      <div id="section-easy" class="section container" ng-if="!user.isAuthenticated()">
+      <div id="section-easy" class="section container" ng-if="!authenticated">
         <div class="row">
           <div class="c4">
             <img src="/images/avatar-teach.png" class="img-responsive deco" >
@@ -611,7 +602,6 @@
           <script src="scripts/directives/saveprofiler.js"></script>
           <script src="scripts/directives/passwordmatch.js"></script>
           <script src="scripts/controllers/login.js"></script>
-          <script src="scripts/services/authentication.js"></script>
           <!-- endbuild -->
   </div>
 </body>
