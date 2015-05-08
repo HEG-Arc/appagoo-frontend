@@ -1,3 +1,4 @@
+'use strict';
 /*jQuery time*/
 $(document).ready(function(){
   // customize all inputs (will search for checkboxes and radio buttons)

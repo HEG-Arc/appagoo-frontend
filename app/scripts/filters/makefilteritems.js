@@ -44,15 +44,15 @@ filters.filter('makeFilterItems', function() {
                     }
                     if (removeNulls) {
                         if (item[filterOn]) {
-                            filterItems.check[item[filterOn]] = true;
+                            filterItems.check[item] = true;
                             if (!isDuplicate) {
-                                filterItems.chosen.push(item[filterOn])
+                                filterItems.chosen.push(item)
                             }
                         }
                     } else {
                         if (!isDuplicate) {
-                            filterItems.check[item[filterOn]] = true;
-                            filterItems.chosen.push(item[filterOn])
+                            filterItems.check[item] = true;
+                            filterItems.chosen.push(item)
                         }
                     }
 

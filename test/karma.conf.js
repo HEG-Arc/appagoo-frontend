@@ -29,7 +29,6 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
-      'bower_components/bootstrap-rating-input/build/bootstrap-rating-input.min.js',
       'bower_components/iCheck/icheck.min.js',
       'bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js',
       'bower_components/angular-bootstrap-slider/slider.js',
@@ -37,6 +36,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/ngDialog/js/ngDialog.js',
       'bower_components/angular-directive.g-signin/google-plus-signin.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

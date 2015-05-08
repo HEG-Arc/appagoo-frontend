@@ -17,10 +17,10 @@ angular
     'ngSanitize',
     'ngTouch',
     'app.filters',
-    'angularUtils.directives.dirPagination',
     'ui.bootstrap-slider',
     'ngDialog',
-    'directive.g+signin'
+    'directive.g+signin',
+    'ui.bootstrap',
   ])
   .config(function ($routeProvider, $interpolateProvider, $httpProvider, $resourceProvider, ngDialogProvider) {
     $routeProvider
