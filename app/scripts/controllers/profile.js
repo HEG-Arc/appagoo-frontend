@@ -16,7 +16,7 @@ angular.module('appagooApp')
     ];
 
     var getProfile = function(){
-      $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
+      //$http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
       $http.get('/api/profiles/?format=json').then(function(results) {
          $scope.profiles = results.data;
       });

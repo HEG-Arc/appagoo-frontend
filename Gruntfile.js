@@ -91,6 +91,31 @@ module.exports = function (grunt) {
           context: '/admin', // the context of the data service
           host: 'localhost', // wherever the data service is running
           port: 8000 // the port that the data service is running on
+        },
+        {
+          context: '/about', // the context of the data service
+          host: 'localhost', // wherever the data service is running
+          port: 8000 // the port that the data service is running on
+        },
+        {
+          context: '/contact', // the context of the data service
+          host: 'localhost', // wherever the data service is running
+          port: 8000 // the port that the data service is running on
+        },
+        {
+          context: '/conditions', // the context of the data service
+          host: 'localhost', // wherever the data service is running
+          port: 8000 // the port that the data service is running on
+        },
+        {
+          context: '/privacy', // the context of the data service
+          host: 'localhost', // wherever the data service is running
+          port: 8000 // the port that the data service is running on
+        },
+        {
+          context: '/impressum', // the context of the data service
+          host: 'localhost', // wherever the data service is running
+          port: 8000 // the port that the data service is running on
         }
       ],
       livereload: {

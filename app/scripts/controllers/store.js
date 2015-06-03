@@ -15,6 +15,33 @@ angular.module('appagooApp')
       'Karma'
     ];
     
+    //profile
+        
+    var getProfile = function(){
+      $http.get('/api/profiles/?format=json').then(function(results) {
+         $scope.profiles = results.data;
+         getApps();
+      });
+    };
+    
+    $scope.profilUpdate = function(obj) {
+      if ($scope.authenticated) {
+        $http.put('/api/profiles/'+obj.id+'/', obj);  
+        getInstalledApps();
+      }
+      getApps(); 
+    }
+    
+    getProfile();
+
+    $scope.$on('user:login', function(event,data) {
+      $scope.authenticated = true;
+      getProfile();
+      getInstalledApps();
+    });
+    
+    //store
+    
     var makeFilterItems = $filter('makeFilterItems');
     
     $scope.name = "";
@@ -86,17 +113,19 @@ angular.module('appagooApp')
     getCategories();
 
     var getApps = function() {  
-      if($scope.name == "") {
-        $http.get('/api/applications/?format=json&minRate='+($scope.filters.minRate-0.25)+'&order='+$scope.filters.order+'&categories='+$scope.filters.categories+'&page='+$scope.currentPage+'&price='+$scope.filters.price).then(function(results) {
-          $scope.applications = results.data.results;
-          $scope.totalItems = results.data.count;
-        });
-      } else {
-        $http.get('/api/applications/?format=json&minRate='+($scope.filters.minRate-0.25)+'&order='+$scope.filters.order+'&categories='+$scope.filters.categories+'&page='+$scope.currentPage+'&price='+$scope.filters.price+'&name='+$scope.name).then(function(results) {
-          $scope.applications = results.data.results;
-          $scope.totalItems = results.data.count;
-        });
-      }
+      if(null != $scope.profiles) {
+        if($scope.name == "") {
+          $http.get('/api/applications/?format=json&minRate='+($scope.filters.minRate-0.25)+'&order='+$scope.filters.order+'&categories='+$scope.filters.categories+'&page='+$scope.currentPage+'&price='+$scope.filters.price+'&profile='+(10-$scope.profiles[0].value)+','+(10-$scope.profiles[1].value)+','+(10-$scope.profiles[2].value)+','+(10-$scope.profiles[3].value)+','+(10-$scope.profiles[4].value)+','+(10-$scope.profiles[5].value)+','+(10-$scope.profiles[6].value)).then(function(results) {
+            $scope.applications = results.data.results;
+            $scope.totalItems = results.data.count;
+          });
+        } else {
+          $http.get('/api/applications/?format=json&minRate='+($scope.filters.minRate-0.25)+'&order='+$scope.filters.order+'&categories='+$scope.filters.categories+'&page='+$scope.currentPage+'&price='+$scope.filters.price+'&profile='+(10-$scope.profiles[0].value)+','+(10-$scope.profiles[1].value)+','+(10-$scope.profiles[2].value)+','+(10-$scope.profiles[3].value)+','+(10-$scope.profiles[4].value)+','+(10-$scope.profiles[5].value)+','+(10-$scope.profiles[6].value)+'&name='+$scope.name).then(function(results) {
+            $scope.applications = results.data.results;
+            $scope.totalItems = results.data.count;
+          });
+        }
+       }
     };
     
     $scope.changeCommercialPriceFilter = function() {
@@ -112,19 +141,15 @@ angular.module('appagooApp')
     var setPrice = function() {
       if($scope.priceFilter.free && $scope.priceFilter.commercial) {
           $scope.filters.price = 2;
-          console.log($scope.filters.price);
       }
       if(!$scope.priceFilter.free && !$scope.priceFilter.commercial) {
           $scope.filters.price = 2;
-          console.log($scope.filters.price);
       }
       if($scope.priceFilter.free && !$scope.priceFilter.commercial) {
           $scope.filters.price = 0;
-          console.log($scope.filters.price);
       }
       if(!$scope.priceFilter.free && $scope.priceFilter.commercial) {
           $scope.filters.price = 1;
-          console.log($scope.filters.price);
       }
     };
 
@@ -154,25 +179,15 @@ angular.module('appagooApp')
       return array;
     };
     
-    
-    /*
-    $scope.filterByMinimalRate = function(item) {
-        return item.evaluation >= $scope.minRate;
-    };  
-    
-    $scope.filterByPrice = function(item) {
-        if($scope.priceFilter.free && $scope.priceFilter.commercial) {
-            return item.price >= 0;
+    //check
+    var getInstalledApps = function() {  
+      if ($scope.authenticated) {
+        if(null != $scope.profiles) {
+          $http.get('/api/userProfiles/?format=json'+'&profile='+(10-$scope.profiles[0].value)+','+(10-$scope.profiles[1].value)+','+(10-$scope.profiles[2].value)+','+(10-$scope.profiles[3].value)+','+(10-$scope.profiles[4].value)+','+(10-$scope.profiles[5].value)+','+(10-$scope.profiles[6].value)).then(function(results) {
+            $scope.installedApps = results.data;
+          });
         }
-        if(!$scope.priceFilter.free && !$scope.priceFilter.commercial) {
-            return item.price >= 0;
-        }
-        if($scope.priceFilter.free && !$scope.priceFilter.commercial) {
-            return item.price == 0;
-        }
-        if(!$scope.priceFilter.free && $scope.priceFilter.commercial) {
-            return item.price > 0;
-        }
+      }
     };
-    */
+    
 });
